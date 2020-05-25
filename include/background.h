@@ -1,0 +1,22 @@
+#ifndef BACKGROUND_H
+#define BACKGROUND_H
+#include <SFML/Graphics.hpp>
+
+// background class
+class background {
+    public:
+        background          (sf::RenderWindow*,
+                             sf::Vector2f);
+    public:
+        void init           (void);
+        void update         (void);
+        void render         (void);
+    private:
+        sf::Vector2f        pos;
+        sf::Image           image;
+        sf::Texture         texture;
+        sf::Sprite          sprite;
+        sf::RenderWindow*   renderWin;
+};
+
+#endif
