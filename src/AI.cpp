@@ -12,7 +12,7 @@ AI::AI (player* pPlayer,
 
 void AI::init (void) {
     if (pPlayer->id == "player2")
-        pPlayer->fric = -0.2f;
+        pPlayer->fric = -0.08f;
     return;
 }
 
