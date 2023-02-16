@@ -38,9 +38,9 @@ class player {
         sf::Sprite              sprite;
         sf::Sprite              shadow;
         sf::Texture             texture;
-        sf::Texture              shadowTex;
-        dir                     dir;
-        side                    side;
+        sf::Texture		shadowTex;
+        Dir                     dir;
+        Side			side;
     private:
         sf::Clock               clock;
         soundManager*           sManager;

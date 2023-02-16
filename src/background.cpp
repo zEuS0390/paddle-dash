@@ -1,14 +1,14 @@
 #include "background.h"
 #include <SFML/Graphics.hpp>
 
-background::background (sf::RenderWindow* renderWin,
+Background::Background (sf::RenderWindow* renderWin,
                         sf::Vector2f initPos)
 :   pos(initPos),
     renderWin(renderWin) {
     init();
 }
 
-void background::init (void) {
+void Background::init (void) {
     if (!image.loadFromFile("gfx/background.png")) {
         return;
     }
@@ -20,12 +20,12 @@ void background::init (void) {
     return;
 }
 
-void background::update (void) {
+void Background::update (void) {
     sprite.setTexture(texture);
     return;
 }
 
-void background::render (void) {
+void Background::render (void) {
     renderWin->draw(sprite);
     return;
 }

@@ -9,14 +9,14 @@ class AI {
         std::string         status;
     public:
         AI                  (player*,
-                            pongball*);
+                            Pongball*);
     public:
         void init           (void);
         void sense          (void);
         void update         (void);
     private:
         player*             pPlayer;
-        pongball*           pBall;
+        Pongball*           pBall;
 };
 
 #endif

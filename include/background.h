@@ -3,9 +3,9 @@
 #include <SFML/Graphics.hpp>
 
 // background class
-class background {
+class Background {
     public:
-        background          (sf::RenderWindow*,
+        Background          (sf::RenderWindow*,
                              sf::Vector2f);
     public:
         void init           (void);

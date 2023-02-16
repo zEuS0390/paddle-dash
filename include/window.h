@@ -40,9 +40,9 @@ class window {
         menu                    gameMenu;
         sf::Clock               gameClock;
         sf::Font                font;
-        background              background;
+        Background              background;
         players                 _2players;
-        pongball                pongball;
+        Pongball                pongball;
         soundManager            sManager;
         AI                      AIplayer;
         std::vector<sf::Text>   scoresTxt;

@@ -8,7 +8,7 @@
 #include "rect.h"
 
 // Main constructor of the pongball class
-pongball::pongball (sf::RenderWindow* renderWin,
+Pongball::Pongball (sf::RenderWindow* renderWin,
                     players* cplayers,
                     soundManager* sManager)
 :   effectActive(false),
@@ -27,11 +27,11 @@ pongball::pongball (sf::RenderWindow* renderWin,
 }
 
 // Main deconstructor of the pong ball class
-pongball::~pongball (void) {
+Pongball::~Pongball (void) {
 }
 
 // Initialization of pong ball
-void pongball::init (void) {
+void Pongball::init (void) {
     if (!texture.loadFromFile("gfx/pongball.png")) {
         return;
     }
@@ -57,7 +57,7 @@ void pongball::init (void) {
     return;
 }
 
-void pongball::hitExplode (void) {
+void Pongball::hitExplode (void) {
     if (effectActive) {
         if (effectClock.getElapsedTime().asSeconds() >= 0.09f) {
             if (effectRect.left == 160) {
@@ -76,7 +76,7 @@ void pongball::hitExplode (void) {
 }
 
 // Handles movemenr
-void pongball::movement (void) {
+void Pongball::movement (void) {
     float deltaTime = clock.getElapsedTime().asSeconds();
     if (speed <= maxSpeed && speed >= constSpeed) {
         speed += acc;
@@ -89,7 +89,7 @@ void pongball::movement (void) {
     return;
 }
 
-void pongball::nextPos (void) {
+void Pongball::nextPos (void) {
     float player1X = currPos.x-cplayers->playersVec.at(0).side.left;
     float player1R = player1X / std::cos(ballAngle * M_PI/180);
     float player1Y = player1R * std::sin(ballAngle * M_PI/180);
@@ -122,7 +122,7 @@ void pongball::nextPos (void) {
 }
 
 // Handles screen collision
-void pongball::collision (void) {
+void Pongball::collision (void) {
     if (currPos.x > 640.0f) {
         isCounting = true;
         speed = -constSpeed;
@@ -148,7 +148,7 @@ void pongball::collision (void) {
     return;
 }
 
-void pongball::paddleCollide (void) {
+void Pongball::paddleCollide (void) {
     for (unsigned int i = 0; i < cplayers->playersVec.size(); i++) {
         float top = cplayers->playersVec.at(i).side.top;
         float bottom = cplayers->playersVec.at(i).side.bottom;
@@ -243,7 +243,7 @@ void pongball::paddleCollide (void) {
     return;
 }
 
-void pongball::restart (void) {
+void Pongball::restart (void) {
     ballAngle = 0.0f;
     currPos = sf::Vector2f(320.0f, 240.0f);
     sprite.setPosition(currPos);
@@ -252,7 +252,7 @@ void pongball::restart (void) {
     return;
 }
 
-void pongball::randomAngle (float MIN, float MAX) {
+void Pongball::randomAngle (float MIN, float MAX) {
     std::uniform_real_distribution<float> randAngle(MIN, MAX);
     float angle = randAngle(eng);
     ballAngle = angle;
@@ -261,7 +261,7 @@ void pongball::randomAngle (float MIN, float MAX) {
 }
 
 // Generates random vertical position for the ball
-void pongball::randomPos (void) {
+void Pongball::randomPos (void) {
     float xpos;
     std::uniform_real_distribution<float> randPos(50.0f, 430.0f);
     if (speed > 0) {
@@ -275,7 +275,7 @@ void pongball::randomPos (void) {
 }
 
 // Handles update
-void pongball::update (void) {
+void Pongball::update (void) {
     hitExplode();
     collision();
     setSides();
@@ -299,7 +299,7 @@ void pongball::update (void) {
 }
 
 // Handles render
-void pongball::render (void) {
+void Pongball::render (void) {
     if (isMoving) {
         renderWin->draw(sprite);
     }
@@ -307,7 +307,7 @@ void pongball::render (void) {
     return;
 }
 
-void pongball::setSides (void) {
+void Pongball::setSides (void) {
     side = {sprite.getGlobalBounds().top,
             sprite.getGlobalBounds().top+texture.getSize().y,
             sprite.getGlobalBounds().left,

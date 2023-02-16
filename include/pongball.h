@@ -7,7 +7,7 @@
 #include "sound.h"
 
 // pongball class
-class pongball {
+class Pongball {
     public:
         bool                effectActive;
         bool                isCounting;
@@ -19,10 +19,10 @@ class pongball {
         float               ballAngle;
         float               counterVar;
     public:
-        pongball            (sf::RenderWindow*,
+        Pongball            (sf::RenderWindow*,
                              players*,
                              soundManager*);
-        ~pongball           (void);
+        ~Pongball           (void);
     public:
         void init           (void);
         void hitExplode     (void);
@@ -45,7 +45,7 @@ class pongball {
         sf::Clock           counter;
         sf::Sprite          sprite;
         sf::Texture         texture;
-        side                side;
+        Side                side;
         sf::Vector2f        currPos;
         sf::Vector2f        pos;
         sf::Vector2f        effectPos;

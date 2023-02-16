@@ -4,7 +4,7 @@
 #include "AI.h"
 
 AI::AI (player* pPlayer,
-        pongball* pBall)
+        Pongball* pBall)
 :   pPlayer(pPlayer),
     pBall(pBall) {
     init();
