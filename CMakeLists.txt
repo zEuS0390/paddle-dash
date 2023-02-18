@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(pong_game_by_zEuS0390 VERSION 1.2.0)
+project(pong_game_by_zEuS0390 VERSION 1.1.0)
 
 option(PONG_AUTO_DOWNLOAD "Download automatically during build" FALSE)
 option(PONG_GENERATE_INSTALLER "Generate an installer" FALSE)
