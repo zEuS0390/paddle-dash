@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.21)
 project(pong_game_by_zEuS0390 VERSION 1.0.0)
 
-option(SNAKE_AUTO_DOWNLOAD "Download automatically during build" FALSE)
-option(SNAKE_GENERATE_INSTALLER "Generate an installer" FALSE)
+option(PONG_AUTO_DOWNLOAD "Download automatically during build" FALSE)
+option(PONG_GENERATE_INSTALLER "Generate an installer" FALSE)
 
 # Declare variables
 set(CMAKE_CXX_STANDARD 17)
@@ -34,7 +34,7 @@ set(APP_SRC_FILES
 )
 
 # Download the SFML library and store it in the libs folder
-if (SNAKE_AUTO_DOWNLOAD)
+if (PONG_AUTO_DOWNLOAD)
 	if (NOT EXISTS "${PROJECT_SOURCE_DIR}/libs/${SFML_NAME}")
 		message("Downloading ${SFML_NAME} library")
 		file(DOWNLOAD "${SFML_SITE}/${SFML_ARCHIVE}" 
@@ -69,7 +69,7 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
 		$<TARGET_FILE_DIR:${PROJECT_NAME}>)
 endif()
 
-if (SNAKE_GENERATE_INSTALLER)
+if (PONG_GENERATE_INSTALLER)
 	install(TARGETS ${PROJECT_NAME} DESTINATION ".")
 	install(DIRECTORY ${PROJECT_SOURCE_DIR}/gfx DESTINATION ".")
 	install(DIRECTORY ${PROJECT_SOURCE_DIR}/sfx DESTINATION ".")
