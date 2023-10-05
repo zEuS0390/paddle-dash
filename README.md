@@ -1,6 +1,7 @@
 # SFML Pong Game
 
-Demo Video: https://youtu.be/-TnrBlE4O6Q
+<b>Demo Video:</b> https://youtu.be/-TnrBlE4O6Q<br>
+<b>Download Latest Release:</b> https://github.com/zEuS0390/cpp-sfml-pong-game/releases/latest
 
 ## How to Build?
 1. Download the latest version of [SFML 2.x](https://www.sfml-dev.org/download.php), make sure it is compatible to your platform.
