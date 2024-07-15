@@ -23,11 +23,15 @@ set(APP_SRC_FILES
 	src/window.cpp
 )
 
+set(FETCHCONTENT_QUIET FALSE)
+
 # Include SFML using FetchContent
 include(FetchContent)
 FetchContent_Declare(SFML
 	GIT_REPOSITORY https://github.com/SFML/SFML.git
-	GIT_TAG 2.6.x)
+	GIT_TAG 2.6.x
+	GIT_PROGRESS TRUE
+)
 FetchContent_MakeAvailable(SFML)
 
 # Configure build based on platform
