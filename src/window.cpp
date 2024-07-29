@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "window.h"
-#include "players.h"
-#include "funcs.h"
+#include "window.hpp"
+#include "players.hpp"
+#include "funcs.hpp"
 
 // Main constructor of the window class
 window::window (unsigned int x,

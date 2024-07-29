@@ -1,13 +1,14 @@
 #ifndef WINDOW_H
 #define WINDOW_H
+
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "pongball.h"
-#include "players.h"
-#include "sound.h"
-#include "background.h"
-#include "AI.h"
-#include "menu.h"
+#include "pongball.hpp"
+#include "players.hpp"
+#include "sound.hpp"
+#include "background.hpp"
+#include "AI.hpp"
+#include "menu.hpp"
 
 // window class
 class window {

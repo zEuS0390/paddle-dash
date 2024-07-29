@@ -1,7 +1,7 @@
 #include <cmath>
-#include "pongball.h"
-#include "players.h"
-#include "AI.h"
+#include "pongball.hpp"
+#include "players.hpp"
+#include "AI.hpp"
 
 AI::AI (player* pPlayer,
         Pongball* pBall)

@@ -2,10 +2,10 @@
 #include <random>
 #include <ctime>
 #include <cmath>
-#include "pongball.h"
-#include "players.h"
-#include "sound.h"
-#include "rect.h"
+#include "pongball.hpp"
+#include "players.hpp"
+#include "sound.hpp"
+#include "rect.hpp"
 
 // Main constructor of the pongball class
 Pongball::Pongball (sf::RenderWindow* renderWin,

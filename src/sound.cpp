@@ -1,6 +1,6 @@
 #include <SFML/Audio.hpp>
 #include <string>
-#include "sound.h"
+#include "sound.hpp"
 
 sound::sound (std::string name,
               std::string filepath,

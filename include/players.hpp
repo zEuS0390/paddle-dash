@@ -1,10 +1,11 @@
 #ifndef PLAYERS_H
 #define PLAYERS_H
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
-#include "rect.h"
-#include "sound.h"
+#include "rect.hpp"
+#include "sound.hpp"
 
 // player class
 class player {

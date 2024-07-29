@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "menu.h"
+#include "menu.hpp"
 
 button::button (std::string str,
                 sf::Color buttonColor,

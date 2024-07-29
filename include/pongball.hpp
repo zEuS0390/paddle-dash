@@ -1,10 +1,11 @@
 #ifndef PONGBALL_H
 #define PONGBALL_H
+
 #include <SFML/Graphics.hpp>
 #include <random>
-#include "players.h"
-#include "rect.h"
-#include "sound.h"
+#include "players.hpp"
+#include "rect.hpp"
+#include "sound.hpp"
 
 // pongball class
 class Pongball {

@@ -1,9 +1,10 @@
 #ifndef MENU_H
 #define MENU_H
+
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <list>
-#include "sound.h"
+#include "sound.hpp"
 
 class button {
     public:

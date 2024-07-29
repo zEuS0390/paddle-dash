@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <cmath>
-#include "players.h"
-#include "sound.h"
+#include "players.hpp"
+#include "sound.hpp"
 
 player::player (std::string id,
                 std::string filepath,

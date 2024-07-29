@@ -1,5 +1,5 @@
-#include "background.h"
 #include <SFML/Graphics.hpp>
+#include "background.hpp"
 
 Background::Background (sf::RenderWindow* renderWin,
                         sf::Vector2f initPos)
