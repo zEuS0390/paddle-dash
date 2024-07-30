@@ -23,20 +23,24 @@ window::window (unsigned int x,
              &_2players,
              &sManager),
     AIplayer(&_2players.playersVec.at(1),
-             &pongball) {
+             &pongball) 
+{
     init();
 }
 
 // Main destructor of the window class
-window::~window (void) {
+window::~window () 
+{
     scoresTxt.clear();
 }
 
 // Initialization of objects in the game
-void window::init (void) {
+void window::init () 
+{
     renderWin.setFramerateLimit(120);
     renderWin.setMouseCursorVisible(false);
-    if (!font.loadFromFile("gfx/font/november.ttf")) {
+    if (!font.loadFromFile("gfx/font/november.ttf")) 
+    {
         return;
     }
     textInit(&scoresTxt, 60.0f, sf::Color::White, sf::Vector2f(160.0f, 50.0f));
@@ -50,7 +54,8 @@ template <class T>
 void window::textInit (std::vector<T>* textVec,
                        float characterSize,
                        sf::Color color,
-                       sf::Vector2f pos) {
+                       sf::Vector2f pos) 
+{
     sf::Text* ptext = new sf::Text;
     ptext->setFont(font);
     ptext->setCharacterSize(characterSize);
@@ -62,12 +67,17 @@ void window::textInit (std::vector<T>* textVec,
 }
 
 // Handles events
-void window::events (void) {
+void window::events () 
+{
     sf::Event event;
-    while (renderWin.pollEvent(event)) {
-        if (event.type == sf::Event::KeyPressed) {
-            if (isGameActive) {
-                if (event.key.code == sf::Keyboard::Escape) {
+    while (renderWin.pollEvent(event)) 
+    {
+        if (event.type == sf::Event::KeyPressed) 
+        {
+            if (isGameActive) 
+            {
+                if (event.key.code == sf::Keyboard::Escape) 
+                {
                     sManager.playAudio("quit");
                     gameMenu.isMenu = true;
                     isGameActive = false;
@@ -81,30 +91,38 @@ void window::events (void) {
     return;
 }
 
-void window::menuSelection (void) {
+void window::menuSelection () 
+{
     std::string selected = gameMenu.checkSelected();
-    if (selected == "Player vs. CPU") {
+    if (selected == "Player vs. CPU") 
+    {
         isAI = true;
         gameMenu.isMenu = false;
         isGameActive = true;
         pongball.isMoving = false;
         pongball.isCounting = true;
         pongball.restart();
-    } else if (selected == "Player vs. Player") {
+    } 
+    else if (selected == "Player vs. Player") 
+    {
         isAI = false;
         gameMenu.isMenu = false;
         isGameActive = true;
         pongball.isMoving = false;
         pongball.isCounting = true;
         pongball.restart();
-    } else if (selected == "Exit") {
+    } 
+    else if (selected == "Exit") 
+    {
         isRunning = false;
     }
     return;
 }
 
-void window::updateScores (void) {
-    for (unsigned int i = 0; i < _2players.playersVec.size(); i++) {
+void window::updateScores () 
+{
+    for (unsigned int i = 0; i < _2players.playersVec.size(); i++) 
+    {
         scoresTxt.at(i).setString(funcs::intToStr(_2players.playersVec.at(i).score));
         scoresTxt.at(i).setOrigin(scoresTxt.at(i).getGlobalBounds().width/2.0f,
                                    scoresTxt.at(i).getGlobalBounds().height/2.0f);
@@ -113,13 +131,15 @@ void window::updateScores (void) {
 }
 
 // Handles updates
-void window::updates (void) {
+void window::updates () 
+{
     menuSelection();
     if (isGameActive){
         updateScores();
         pongball.update();
         _2players.updates();
-        if (isAI) {
+        if (isAI) 
+        {
             AITxt.back().setString(AIplayer.status);
             AIplayer.update();
         }
@@ -129,18 +149,22 @@ void window::updates (void) {
     return;
 }
 
-void window::renderScores (void) {
-    for (unsigned int i = 0; i < _2players.playersVec.size(); i++) {
+void window::renderScores () 
+{
+    for (unsigned int i = 0; i < _2players.playersVec.size(); i++) 
+    {
         renderWin.draw(scoresTxt.at(i));
     }
     return;
 }
 
 // Handles render
-void window::render (void) {
+void window::render () 
+{
     renderWin.clear();
     gameMenu.render();
-    if (isGameActive) {
+    if (isGameActive) 
+    {
         background.render();
         renderWin.draw(AITxt.back());
         renderScores();
@@ -152,8 +176,10 @@ void window::render (void) {
 }
 
 // Handles game loop
-void window::gameLoop (void) {
-    while (isRunning) {
+void window::gameLoop () 
+{
+    while (isRunning) 
+    {
         events();
         updates();
         render();

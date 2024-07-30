@@ -5,17 +5,15 @@
 #include "players.hpp"
 #include "pongball.hpp"
 
-class AI {
-    public:
+class AI 
+{
+public:
         std::string         status;
-    public:
-        AI                  (player*,
-                            Pongball*);
-    public:
-        void init           (void);
-        void sense          (void);
-        void update         (void);
-    private:
+        AI                  (player*, Pongball*);
+        void init           ();
+        void sense          ();
+        void update         ();
+private:
         player*             pPlayer;
         Pongball*           pBall;
 };

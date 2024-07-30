@@ -4,15 +4,14 @@
 #include <SFML/Graphics.hpp>
 
 // background class
-class Background {
-    public:
-        Background          (sf::RenderWindow*,
-                             sf::Vector2f);
-    public:
-        void init           (void);
-        void update         (void);
-        void render         (void);
-    private:
+class Background 
+{
+public:
+        Background          (sf::RenderWindow*, sf::Vector2f);
+        void init           ();
+        void update         ();
+        void render         ();
+private:
         sf::Vector2f        pos;
         sf::Image           image;
         sf::Texture         texture;

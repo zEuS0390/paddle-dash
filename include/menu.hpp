@@ -6,8 +6,9 @@
 #include <list>
 #include "sound.hpp"
 
-class button {
-    public:
+class button 
+{
+public:
         bool                                isHovered;
         bool                                isSelected;
         std::string                         str;
@@ -16,52 +17,33 @@ class button {
         float                               textCharSize;
         sf::Vector2f                        buttonSize;
         sf::Vector2f                        position;
-    public:
-        button                              (std::string,
-                                             sf::Color,
-                                             sf::Color,
-                                             float,
-                                             sf::Vector2f,
-                                             sf::Vector2f);
-    private:
-        void init                           (void);
-    public:
+        button                              (std::string, sf::Color, sf::Color, float, sf::Vector2f, sf::Vector2f);
+        void init                           ();
+public:
         sf::RectangleShape                  buttonObj;
         sf::Text                            textObj;
         sf::Font                            fontObj;
 };
 
 // menu class
-class menu {
-    public:
+class menu 
+{
+public:
         bool                                isPlaying;
         bool                                isMenu;
-    public:
-        menu                                (sf::RenderWindow*,
-                                             soundManager*);
-    public:
-        void init                           (void);
+        menu                                (sf::RenderWindow*, soundManager*);
+        void init                           ();
         template <class T>
-        void mouseSelect                    (std::list<T*>,
-                                             sf::Color,
-                                             sf::Color);
-        std::string checkSelected           (void);
-        void update                         (void);
+        void mouseSelect                    (std::list<T*>, sf::Color, sf::Color);
+        std::string checkSelected           ();
+        void update                         ();
         template <class T>
         void renderMenu                     (std::list<T*>);
-        void render                         (void);
-    public:
+        void render                         ();
         std::list<button*>                  menuButtons;
-    private:
+private:
         template <class T>
-        void createButton                   (std::list<T*>&,
-                                             std::string,
-                                             sf::Color,
-                                             sf::Color,
-                                             float,
-                                             sf::Vector2f,
-                                             sf::Vector2f);
-    private:
+        void createButton                   (std::list<T*>&, std::string, sf::Color, sf::Color, float, sf::Vector2f, sf::Vector2f);
         sf::Image                           gameLogo;
         sf::Image                           menuBackground;
         sf::Texture                         gameLogoTexture;
@@ -70,8 +52,6 @@ class menu {
         sf::Sprite                          gameLogoSprite;
         sf::Sprite                          menuSprite;
         sf::Sprite                          mouseSprite;
-\
-    private:
         sf::RenderWindow*                   renderWin;
         soundManager*                       sManager;
         sf::Mouse                           mouse;

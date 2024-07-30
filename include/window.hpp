@@ -11,33 +11,26 @@
 #include "menu.hpp"
 
 // window class
-class window {
-    public:
+class window 
+{
+public:
         bool                    isAI;
         bool                    isGameActive;
         bool                    isRunning;
-    public:
-        window                  (unsigned int,
-                                unsigned int,
-                                std::string);
-        ~window                 (void);
-    private:
-        void init               (void);
-        template <class T>
-        void textInit           (std::vector<T>*,
-                                 float,
-                                 sf::Color,
-                                 sf::Vector2f);
-        void events             (void);
-        void menuSelection      (void);
-        void updateScores       (void);
-        void updates            (void);
-        void renderScores       (void);
-        void render             (void);
-        void gameLoop           (void);
-    public:
+        window                  (unsigned int, unsigned int, std::string);
+        ~window                 ();
         sf::RenderWindow        renderWin;
-    private:
+private:
+        void init               ();
+        template <class T>
+        void textInit           (std::vector<T>*, float, sf::Color, sf::Vector2f);
+        void events             ();
+        void menuSelection      ();
+        void updateScores       ();
+        void updates            ();
+        void renderScores       ();
+        void render             ();
+        void gameLoop           ();
         menu                    gameMenu;
         sf::Clock               gameClock;
         sf::Font                font;
@@ -48,7 +41,6 @@ class window {
         AI                      AIplayer;
         std::vector<sf::Text>   scoresTxt;
         std::vector<sf::Text>   AITxt;
-
 };
 
 #endif

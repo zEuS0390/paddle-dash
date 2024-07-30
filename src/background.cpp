@@ -1,31 +1,30 @@
 #include <SFML/Graphics.hpp>
 #include "background.hpp"
 
-Background::Background (sf::RenderWindow* renderWin,
-                        sf::Vector2f initPos)
-:   pos(initPos),
-    renderWin(renderWin) {
+Background::Background (sf::RenderWindow* renderWin, sf::Vector2f initPos):   
+                        pos(initPos), renderWin(renderWin) 
+{
     init();
 }
 
-void Background::init (void) {
-    if (!image.loadFromFile("gfx/background.png")) {
+void Background::init () 
+{
+    if (!image.loadFromFile("gfx/background.png")) 
         return;
-    }
+
     texture.loadFromImage(image);
     sprite.setTexture(texture);
-    sprite.setOrigin(texture.getSize().x/2.0f,
-                     texture.getSize().y/2.0f);
+    sprite.setOrigin(texture.getSize().x/2.0f, texture.getSize().y/2.0f);
+
     sprite.setPosition(pos);
-    return;
 }
 
-void Background::update (void) {
+void Background::update () 
+{
     sprite.setTexture(texture);
-    return;
 }
 
-void Background::render (void) {
+void Background::render () 
+{
     renderWin->draw(sprite);
-    return;
 }

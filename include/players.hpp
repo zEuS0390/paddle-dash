@@ -8,8 +8,9 @@
 #include "sound.hpp"
 
 // player class
-class player {
-    public:
+class player 
+{
+public:
         std::string             id;
         std::string             filepath;
         std::string             shadowfilepath;
@@ -20,20 +21,12 @@ class player {
         float                   velY;
         float                   accY;
         float                   fric;
-    public:
-        player                  (std::string,
-                                 std::string,
-                                 std::string,
-                                 sf::Vector2f,
-                                 soundManager*);
-        void init               (void);
-        void movement           (void);
-        void collision          (void);
-        void restartPos         (void);
-        void update             (void);
-    private:
-        void setSides           (void);
-    public:
+        player                  (std::string, std::string, std::string, sf::Vector2f, soundManager*);
+        void init               ();
+        void movement           ();
+        void collision          ();
+        void restartPos         ();
+        void update             ();
         sf::Vector2f            initPos;
         sf::Vector2f            currPos;
         sf::Sprite              sprite;
@@ -42,33 +35,31 @@ class player {
         sf::Texture		shadowTex;
         Dir                     dir;
         Side			side;
-    private:
+private:
         sf::Clock               clock;
         soundManager*           sManager;
+        void setSides           ();
 };
 
 // players class
-class players {
-    public:
+class players 
+{
+public:
         std::vector<player>     playersVec;
-    public:
-        players                 (sf::RenderWindow*,
-                                 soundManager*);
-        ~players                (void);
-        void init               (void);
-        void setScore           (std::string,
-                                 int);
-        void resetScore         (void);
-        void move               (std::string,
-                                 std::string);
+        players                 (sf::RenderWindow*, soundManager*);
+        ~players                ();
+        void init               ();
+        void setScore           (std::string, int);
+        void resetScore         ();
+        void move               (std::string, std::string);
         void stop               (std::string);
-        void pause              (void);
-        void resume             (void);
-        void restart            (void);
-        void events             (void);
-        void updates            (void);
-        void renders            (void);
-    private:
+        void pause              ();
+        void resume             ();
+        void restart            ();
+        void events             ();
+        void updates            ();
+        void renders            ();
+private:
         sf::RenderWindow*       renderWin;
         soundManager*           sManager;
 };

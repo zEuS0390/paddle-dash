@@ -1,11 +1,13 @@
 #ifndef RECT_H
 #define RECT_H
 
-struct Dir {
+struct Dir 
+{
     bool up, down;
 };
 
-struct Side {
+struct Side 
+{
     float top, bottom, left, right;
 };
 

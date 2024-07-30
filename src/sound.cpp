@@ -5,23 +5,28 @@
 sound::sound (std::string name,
               std::string filepath,
               float volume)
-:   name(name) {
+:   name(name) 
+{
         init(filepath, volume);
 }
 
-void sound::playSound (void) {
+void sound::playSound () 
+{
     soundObj.play();
     return;
 }
 
-void sound::setPitch (float pitch) {
+void sound::setPitch (float pitch) 
+{
     soundObj.setPitch(pitch);
     return;
 }
 
 void sound::init (std::string filepath,
-                  float volume) {
-    if (!buffer.loadFromFile(filepath)) {
+                  float volume) 
+{
+    if (!buffer.loadFromFile(filepath)) 
+    {
         return;
     }
     soundObj.setBuffer(buffer);
@@ -29,15 +34,18 @@ void sound::init (std::string filepath,
     return;
 }
 
-soundManager::soundManager (void) {
+soundManager::soundManager () 
+{
     audioInit();
 }
 
-soundManager::~soundManager (void) {
+soundManager::~soundManager () 
+{
     terminateAudioThreads();
 }
 
-void soundManager::audioInit (void) {
+void soundManager::audioInit () 
+{
     audioCont.push_back(new sound("pong", "sfx/pong.wav", 75.0f));
     audioCont.push_back(new sound("table", "sfx/pong-table.wav", 75.0f));
     audioCont.push_back(new sound("outside", "sfx/pong-outside.wav", 75.0f));
@@ -50,25 +58,33 @@ void soundManager::audioInit (void) {
     return;
 }
 
-void soundManager::playAudio (std::string name) {
-    for (unsigned int index = 0; index < audioCont.size(); index++) {
-        if (name == audioCont[index]->name) {
+void soundManager::playAudio (std::string name) 
+{
+    for (unsigned int index = 0; index < audioCont.size(); index++) 
+    {
+        if (name == audioCont[index]->name) 
+        {
             audioCont[index]->playSound();
         }
     }
     return;
 }
 
-void soundManager::setPitch (std::string name, float pitch) {
-    for (unsigned int index = 0; index < audioCont.size(); index++) {
-        if (name == audioCont[index]->name) {
+void soundManager::setPitch (std::string name, float pitch) 
+{
+    for (unsigned int index = 0; index < audioCont.size(); index++) 
+    {
+        if (name == audioCont[index]->name) 
+        {
             audioCont[index]->setPitch(pitch);
         }
     }
 }
 
-void soundManager::terminateAudioThreads (void) {
-    while (!audioCont.empty()) {
+void soundManager::terminateAudioThreads () 
+{
+    while (!audioCont.empty()) 
+    {
         delete audioCont.back();
         audioCont.pop_back();
     }
