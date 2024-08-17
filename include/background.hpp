@@ -7,7 +7,7 @@
 class Background 
 {
 public:
-        Background          (sf::RenderWindow*, sf::Vector2f);
+        Background          (sf::RenderWindow&, sf::Vector2f);
         void init           ();
         void update         ();
         void render         ();
@@ -16,7 +16,7 @@ private:
         sf::Image           image;
         sf::Texture         texture;
         sf::Sprite          sprite;
-        sf::RenderWindow*   renderWin;
+        sf::RenderWindow&   renderWin;
 };
 
 #endif

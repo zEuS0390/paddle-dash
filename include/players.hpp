@@ -21,7 +21,7 @@ public:
         float                   velY;
         float                   accY;
         float                   fric;
-        player                  (std::string, std::string, std::string, sf::Vector2f, soundManager*);
+        player                  (std::string, std::string, std::string, sf::Vector2f, soundManager&);
         void init               ();
         void movement           ();
         void collision          ();
@@ -37,7 +37,7 @@ public:
         Side			side;
 private:
         sf::Clock               clock;
-        soundManager*           sManager;
+        soundManager&           sManager;
         void setSides           ();
 };
 
@@ -46,7 +46,7 @@ class players
 {
 public:
         std::vector<player>     playersVec;
-        players                 (sf::RenderWindow*, soundManager*);
+        players                 (sf::RenderWindow&, soundManager&);
         ~players                ();
         void init               ();
         void setScore           (std::string, int);
@@ -60,8 +60,8 @@ public:
         void updates            ();
         void renders            ();
 private:
-        sf::RenderWindow*       renderWin;
-        soundManager*           sManager;
+        sf::RenderWindow&       renderWin;
+        soundManager&           sManager;
 };
 
 #endif

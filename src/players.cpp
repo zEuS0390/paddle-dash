@@ -8,7 +8,7 @@ player::player (std::string id,
                 std::string filepath,
                 std::string shadowfilepath,
                 sf::Vector2f initPos,
-                soundManager* sManager)
+                soundManager& sManager)
 :       id(id),
         filepath(filepath),
         shadowfilepath(shadowfilepath),
@@ -29,18 +29,12 @@ player::player (std::string id,
 
 void player::init () 
 {
-    if (!texture.loadFromFile(filepath)) 
-        return;
-
-    if (!shadowTex.loadFromFile(shadowfilepath)) 
-        return;
-
+    if (!texture.loadFromFile(filepath)) return;
+    if (!shadowTex.loadFromFile(shadowfilepath)) return;
     shadow.setTexture(shadowTex);
-    shadow.setOrigin(shadowTex.getSize().x/2.0f,
-                     shadowTex.getSize().y/2.0f);
+    shadow.setOrigin(shadowTex.getSize().x/2.0f, shadowTex.getSize().y/2.0f);
     sprite.setTexture(texture);
-    sprite.setOrigin(texture.getSize().x/2.0f,
-                     texture.getSize().y/2.0f);
+    sprite.setOrigin(texture.getSize().x/2.0f, texture.getSize().y/2.0f);
     sprite.setPosition(currPos);
     setSides();
 }
@@ -52,7 +46,7 @@ void player::movement ()
     {
         if (!isPlaying) 
         {
-            sManager->playAudio("player-move");
+            sManager.playAudio("player-move");
             isPlaying = true;
         }
         accY = -speed;
@@ -61,7 +55,7 @@ void player::movement ()
     {
         if (!isPlaying) 
         {
-            sManager->playAudio("player-move");
+            sManager.playAudio("player-move");
             isPlaying = true;
         }
         accY = speed;
@@ -127,7 +121,7 @@ void player::setSides ()
             sprite.getGlobalBounds().left+texture.getSize().x};
 }
 
-players::players (sf::RenderWindow* renderWin, soundManager* sManager):
+players::players (sf::RenderWindow& renderWin, soundManager& sManager):
         renderWin(renderWin),
         sManager(sManager) 
 {
@@ -268,7 +262,7 @@ void players::renders ()
 {
     for (unsigned int i = 0; i < playersVec.size(); ++i) 
     {
-        renderWin->draw(playersVec.at(i).shadow);
-        renderWin->draw(playersVec.at(i).sprite);
+        renderWin.draw(playersVec.at(i).shadow);
+        renderWin.draw(playersVec.at(i).sprite);
     }
 }

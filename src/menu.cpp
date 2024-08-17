@@ -1,13 +1,10 @@
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include <string>
+#include <memory>
 #include "menu.hpp"
 
-button::button (std::string str,
-                sf::Color buttonColor,
-                sf::Color textColor,
-                float textCharSize,
-                sf::Vector2f buttonSize,
-                sf::Vector2f position)
+button::button (const std::string& str, const sf::Color& buttonColor, const sf::Color& textColor, float textCharSize, const sf::Vector2f& buttonSize, const sf::Vector2f& position)
 :       isHovered(false),
         isSelected(false),
         str(str),
@@ -17,83 +14,57 @@ button::button (std::string str,
         buttonSize(buttonSize),
         position(position) 
 {
-    init();
+        init();
 }
 
 void button::init () 
 {
-    if (!fontObj.loadFromFile("gfx/font/november.ttf")) 
-        return;
-
-    buttonObj.setFillColor(buttonColor);
-    buttonObj.setSize(buttonSize);
-    buttonObj.setOrigin(buttonObj.getSize().x/2.0f, buttonObj.getSize().y/2.0f);
-    buttonObj.setPosition(position);
-    textObj.setString(str);
-    textObj.setFont(fontObj);
-    textObj.setFillColor(textColor);
-    textObj.setCharacterSize(textCharSize);
-    textObj.setOrigin(textObj.getGlobalBounds().width/2.0f, textObj.getGlobalBounds().height/2.0f);
-    textObj.setPosition(buttonObj.getPosition());
+        if (!fontObj.loadFromFile("gfx/font/november.ttf")) 
+                return;
+        buttonObj.setFillColor(buttonColor);
+        buttonObj.setSize(buttonSize);
+        buttonObj.setOrigin(buttonObj.getSize().x/2.0f, buttonObj.getSize().y/2.0f);
+        buttonObj.setPosition(position);
+        textObj.setString(str);
+        textObj.setFont(fontObj);
+        textObj.setFillColor(textColor);
+        textObj.setCharacterSize(textCharSize);
+        textObj.setOrigin(textObj.getGlobalBounds().width/2.0f, textObj.getGlobalBounds().height/2.0f);
+        textObj.setPosition(buttonObj.getPosition());
 }
 
-menu::menu (sf::RenderWindow* renderWin, soundManager* sManager):
-        isPlaying(false),
+menu::menu (sf::RenderWindow& renderWin, soundManager& sManager)
+:       isPlaying(false),
         isMenu(true),
         renderWin(renderWin),
         sManager(sManager) 
 {
-    init();
+        init();
 }
 
 void menu::init () 
 {
-    if (!gameLogo.loadFromFile("gfx/game-logo.png"))
-        return;
-
-    if (!mouseTexture.loadFromFile("gfx/mouse-pointer.png")) 
-        return;
-
-    if (!menuBackground.loadFromFile("gfx/menu-background.png")) 
-        return;
-
-    gameLogoTexture.loadFromImage(gameLogo);
-    gameLogoSprite.setTexture(gameLogoTexture);
-    mouseSprite.setTexture(mouseTexture);
-    mouseSprite.setOrigin(sf::Vector2f(mouseSprite.getGlobalBounds().width/2.0f, mouseSprite.getGlobalBounds().height/2.0f));
-    mouseSprite.setPosition(sf::Vector2f(sf::Mouse::getPosition(*renderWin).x, sf::Mouse::getPosition(*renderWin).y));
-    menuTexture.loadFromImage(menuBackground);
-    menuSprite.setTexture(menuTexture);
-    createButton(menuButtons,
-                 "Player vs. CPU",
-                 sf::Color(0, 0, 0, 80),
-                 sf::Color::White,
-                 40.0f,
-                 sf::Vector2f(380.0f, 80.0f),
-                 sf::Vector2f(320.0f, 240.0f));
-    createButton(menuButtons,
-                  "Player vs. Player",
-                  sf::Color(0, 0, 0, 80),
-                  sf::Color::White,
-                  40.0f,
-                  sf::Vector2f(380.0f, 80.0f),
-                  sf::Vector2f(320.0f, 330.0f ));
-    createButton(menuButtons,
-                 "Exit",
-                 sf::Color(0, 0, 0, 80),
-                 sf::Color::White,
-                 40.0f,
-                 sf::Vector2f(380.0f, 80.0f),
-                 sf::Vector2f(320.0f, 420.0f));
+        if (!gameLogo.loadFromFile("gfx/game-logo.png")) return;
+        if (!mouseTexture.loadFromFile("gfx/mouse-pointer.png")) return;
+        if (!menuBackground.loadFromFile("gfx/menu-background.png")) return;
+        gameLogoTexture.loadFromImage(gameLogo);
+        gameLogoSprite.setTexture(gameLogoTexture);
+        mouseSprite.setTexture(mouseTexture);
+        mouseSprite.setOrigin(sf::Vector2f(mouseSprite.getGlobalBounds().width/2.0f, mouseSprite.getGlobalBounds().height/2.0f));
+        mouseSprite.setPosition(sf::Vector2f(sf::Mouse::getPosition(renderWin).x, sf::Mouse::getPosition(renderWin).y));
+        menuTexture.loadFromImage(menuBackground);
+        menuSprite.setTexture(menuTexture);
+        createButton(menuButtons, "Player vs. CPU", sf::Color(0, 0, 0, 80), sf::Color::White, 40.0f, sf::Vector2f(380.0f, 80.0f), sf::Vector2f(320.0f, 240.0f));
+        createButton(menuButtons, "Player vs. Player", sf::Color(0, 0, 0, 80), sf::Color::White, 40.0f, sf::Vector2f(380.0f, 80.0f), sf::Vector2f(320.0f, 330.0f ));
+        createButton(menuButtons, "Exit", sf::Color(0, 0, 0, 80), sf::Color::White, 40.0f, sf::Vector2f(380.0f, 80.0f), sf::Vector2f(320.0f, 420.0f));
 }
 
-template <class T>
-void menu::mouseSelect (std::list<T*> listObj, sf::Color hoverButtonColor, sf::Color hoverTextColor) 
+void menu::mouseSelect (std::vector<std::unique_ptr<button>>& listObj, const sf::Color& hoverButtonColor, const sf::Color& hoverTextColor) 
 {
-    sf::Vector2i mousePos = mouse.getPosition(*renderWin);
+    sf::Vector2i mousePos = mouse.getPosition(renderWin);
     for (auto iter = listObj.begin(); iter != listObj.end(); iter++) 
     {
-        button* pButton = *iter;
+        button* pButton = iter->get();
         if (mousePos.x > pButton->buttonObj.getGlobalBounds().left &&
             mousePos.x < pButton->buttonObj.getGlobalBounds().left+pButton->buttonObj.getGlobalBounds().width &&
             mousePos.y > pButton->buttonObj.getGlobalBounds().top &&
@@ -101,7 +72,7 @@ void menu::mouseSelect (std::list<T*> listObj, sf::Color hoverButtonColor, sf::C
         {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
             {
-                sManager->playAudio("select");
+                sManager.playAudio("select");
                 pButton->isSelected = true;
             } 
             else if (pButton->isHovered) 
@@ -125,7 +96,7 @@ void menu::mouseSelect (std::list<T*> listObj, sf::Color hoverButtonColor, sf::C
     }
     if (isPlaying) 
     {
-        sManager->playAudio("blip");
+        sManager.playAudio("blip");
         isPlaying = false;
     }
 }
@@ -134,7 +105,7 @@ std::string menu::checkSelected ()
 {
     for (auto iter = menuButtons.begin(); iter != menuButtons.end(); iter++) 
     {
-        button* pButton = *iter;
+        button* pButton = iter->get();
         if (pButton->isSelected) 
         {
             pButton->isSelected = false;
@@ -146,48 +117,47 @@ std::string menu::checkSelected ()
 
 void menu::update () 
 {
-    mouseSprite.setPosition(sf::Vector2f(sf::Mouse::getPosition(*renderWin).x,
-                                         sf::Mouse::getPosition(*renderWin).y));
+    mouseSprite.setPosition(sf::Vector2f(sf::Mouse::getPosition(renderWin).x,
+                                         sf::Mouse::getPosition(renderWin).y));
     if (isMenu)
         mouseSelect(menuButtons, sf::Color(255, 255, 255, 80), sf::Color::Black);
 }
 
-template <class T>
-void menu::renderMenu (std::list<T*> listObj) 
+void menu::renderMenu (std::vector<std::unique_ptr<button>>& listObj) 
 {
-    for (auto iter = listObj.begin(); iter != listObj.end(); iter++) 
-    {
-        button* buttonObj = *iter;
-        renderWin->draw(buttonObj->buttonObj);
-        renderWin->draw(buttonObj->textObj);
-    }
+        for (auto iter = listObj.begin(); iter != listObj.end(); iter++) 
+        {
+                button* btn = iter->get();
+                renderWin.draw(btn->buttonObj);
+                renderWin.draw(btn->textObj);
+        }
 }
 
 void menu::render () 
 {
     if (isMenu) 
     {
-        renderWin->draw(menuSprite);
-        renderWin->draw(gameLogoSprite);
+        renderWin.draw(menuSprite);
+        renderWin.draw(gameLogoSprite);
         renderMenu(menuButtons);
-        renderWin->draw(mouseSprite);
+        renderWin.draw(mouseSprite);
     }
 }
 
-template <class T>
-void menu::createButton (std::list<T*>& listObj,
-                         std::string str,
-                         sf::Color buttonColor,
-                         sf::Color textColor,
+void menu::createButton (std::vector<std::unique_ptr<button>>& listObj,
+                         const std::string& str,
+                         const sf::Color& buttonColor,
+                         const sf::Color& textColor,
                          float textCharSize,
-                         sf::Vector2f buttonSize,
-                         sf::Vector2f position) 
+                         const sf::Vector2f& buttonSize,
+                         const sf::Vector2f& position) 
 {
-    button* buttonObj = new button(str,
-                                   buttonColor,
-                                   textColor,
-                                   textCharSize,
-                                   buttonSize,
-                                   position);
-    listObj.push_back(buttonObj);
+        listObj.push_back(std::make_unique<button>(
+                str,
+                buttonColor,
+                textColor,
+                textCharSize,
+                buttonSize,
+                position
+        ));
 }

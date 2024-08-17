@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <memory>
 #include "pongball.hpp"
 #include "players.hpp"
 #include "sound.hpp"
@@ -17,13 +18,12 @@ public:
         bool                    isAI;
         bool                    isGameActive;
         bool                    isRunning;
-        window                  (unsigned int, unsigned int, std::string);
+        window                  (unsigned int, unsigned int, const std::string&);
         ~window                 ();
         sf::RenderWindow        renderWin;
 private:
         void init               ();
-        template <class T>
-        void textInit           (std::vector<T>*, float, sf::Color, sf::Vector2f);
+        void textInit           (std::vector<std::unique_ptr<sf::Text>>&, float, sf::Color, sf::Vector2f);
         void events             ();
         void menuSelection      ();
         void updateScores       ();
@@ -39,8 +39,8 @@ private:
         Pongball                pongball;
         soundManager            sManager;
         AI                      AIplayer;
-        std::vector<sf::Text>   scoresTxt;
-        std::vector<sf::Text>   AITxt;
+        std::vector<std::unique_ptr<sf::Text>>   scoresTxt;
+        std::vector<std::unique_ptr<sf::Text>>   AITxt;
 };
 
 #endif

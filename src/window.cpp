@@ -1,29 +1,21 @@
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <memory>
 #include "window.hpp"
 #include "players.hpp"
 #include "funcs.hpp"
 
 // Main constructor of the window class
-window::window (unsigned int x,
-                unsigned int y,
-                std::string titleName)
+window::window (unsigned int x, unsigned int y, const std::string& titleName)
 :   isAI(false),
     isGameActive(false),
     isRunning(true),
-    renderWin(sf::VideoMode(x, y),
-              titleName,
-              sf::Style::Titlebar),
-    gameMenu(&renderWin,
-             &sManager),
-    background(&renderWin,
-               sf::Vector2f(x/2.0f, y/2.0f)),
-    _2players(&renderWin, &sManager),
-    pongball(&renderWin,
-             &_2players,
-             &sManager),
-    AIplayer(&_2players.playersVec.at(1),
-             &pongball) 
+    renderWin(sf::VideoMode(x, y), titleName, sf::Style::Titlebar),
+    gameMenu(renderWin, sManager),
+    background(renderWin, sf::Vector2f(x/2.0f, y/2.0f)),
+    _2players(renderWin, sManager),
+    pongball(renderWin, _2players, sManager),
+    AIplayer(_2players.playersVec.at(1), pongball) 
 {
     init();
 }
@@ -39,31 +31,21 @@ void window::init ()
 {
     renderWin.setFramerateLimit(120);
     renderWin.setMouseCursorVisible(false);
-    if (!font.loadFromFile("gfx/font/november.ttf")) 
-    {
-        return;
-    }
-    textInit(&scoresTxt, 60.0f, sf::Color::White, sf::Vector2f(160.0f, 50.0f));
-    textInit(&scoresTxt, 60.0f, sf::Color::White, sf::Vector2f(480.0f, 50.0f));
-    textInit(&AITxt, 20.0f, sf::Color::Yellow, sf::Vector2f(350.0f, 440.0f));
+    if (!font.loadFromFile("gfx/font/november.ttf")) return;
+    textInit(scoresTxt, 60.0f, sf::Color::White, sf::Vector2f(160.0f, 50.0f));
+    textInit(scoresTxt, 60.0f, sf::Color::White, sf::Vector2f(480.0f, 50.0f));
+    textInit(AITxt, 20.0f, sf::Color::Yellow, sf::Vector2f(350.0f, 440.0f));
     gameLoop();
-    return;
 }
 
-template <class T>
-void window::textInit (std::vector<T>* textVec,
-                       float characterSize,
-                       sf::Color color,
-                       sf::Vector2f pos) 
+void window::textInit (std::vector<std::unique_ptr<sf::Text>>& textVec, float characterSize, sf::Color color, sf::Vector2f pos) 
 {
-    sf::Text* ptext = new sf::Text;
-    ptext->setFont(font);
-    ptext->setCharacterSize(characterSize);
-    ptext->setFillColor(color);
-    ptext->setPosition(pos);
-    textVec->push_back(*ptext);
-    delete ptext;
-    return;
+        std::unique_ptr<sf::Text> ptext = std::make_unique<sf::Text>();
+        ptext->setFont(font);
+        ptext->setCharacterSize(characterSize);
+        ptext->setFillColor(color);
+        ptext->setPosition(pos);
+        textVec.push_back(std::move(ptext));
 }
 
 // Handles events
@@ -88,12 +70,11 @@ void window::events ()
         }
         _2players.events();
     }
-    return;
 }
 
 void window::menuSelection () 
 {
-    std::string selected = gameMenu.checkSelected();
+    const std::string& selected = gameMenu.checkSelected();
     if (selected == "Player vs. CPU") 
     {
         isAI = true;
@@ -116,63 +97,61 @@ void window::menuSelection ()
     {
         isRunning = false;
     }
-    return;
 }
 
 void window::updateScores () 
 {
-    for (unsigned int i = 0; i < _2players.playersVec.size(); i++) 
-    {
-        scoresTxt.at(i).setString(funcs::intToStr(_2players.playersVec.at(i).score));
-        scoresTxt.at(i).setOrigin(scoresTxt.at(i).getGlobalBounds().width/2.0f,
-                                   scoresTxt.at(i).getGlobalBounds().height/2.0f);
-    }
-    return;
+        for (unsigned int i = 0; i < _2players.playersVec.size(); i++) 
+        {
+                sf::Text* txt = scoresTxt.at(i).get();
+                txt->setString(funcs::intToStr(_2players.playersVec.at(i).score));
+                txt->setOrigin(txt->getGlobalBounds().width/2.0f, txt->getGlobalBounds().height/2.0f);
+        }
 }
 
 // Handles updates
 void window::updates () 
 {
-    menuSelection();
-    if (isGameActive){
-        updateScores();
-        pongball.update();
-        _2players.updates();
-        if (isAI) 
+        menuSelection();
+        if (isGameActive)
         {
-            AITxt.back().setString(AIplayer.status);
-            AIplayer.update();
+                updateScores();
+                pongball.update();
+                _2players.updates();
+                if (isAI) 
+                {
+                        AITxt.back()->setString(AIplayer.status);
+                        AIplayer.update();
+                }
+                background.update();
         }
-        background.update();
-    }
-    gameMenu.update();
-    return;
+        gameMenu.update();
 }
 
 void window::renderScores () 
 {
-    for (unsigned int i = 0; i < _2players.playersVec.size(); i++) 
-    {
-        renderWin.draw(scoresTxt.at(i));
-    }
-    return;
+        for (unsigned int i = 0; i < _2players.playersVec.size(); i++) 
+        {
+                sf::Text* txt = scoresTxt.at(i).get();
+                renderWin.draw(*txt);
+        }
 }
 
 // Handles render
 void window::render () 
 {
-    renderWin.clear();
-    gameMenu.render();
-    if (isGameActive) 
-    {
-        background.render();
-        renderWin.draw(AITxt.back());
-        renderScores();
-        _2players.renders();
-        pongball.render();
-    }
-    renderWin.display();
-    return;
+        renderWin.clear();
+        gameMenu.render();
+        if (isGameActive) 
+        {
+                sf::Text* txt = AITxt.back().get();
+                background.render();
+                renderWin.draw(*txt);
+                renderScores();
+                _2players.renders();
+                pongball.render();
+        }
+        renderWin.display();
 }
 
 // Handles game loop
@@ -184,5 +163,4 @@ void window::gameLoop ()
         updates();
         render();
     }
-    return;
 }

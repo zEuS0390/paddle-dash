@@ -2,91 +2,65 @@
 #include <string>
 #include "sound.hpp"
 
-sound::sound (std::string name,
-              std::string filepath,
-              float volume)
-:   name(name) 
+sound::sound (const std::string& name, const std::string& filepath, float volume)
+:       name(name) 
 {
         init(filepath, volume);
 }
 
 void sound::playSound () 
 {
-    soundObj.play();
-    return;
+        soundObj.play();
 }
 
 void sound::setPitch (float pitch) 
 {
-    soundObj.setPitch(pitch);
-    return;
+        soundObj.setPitch(pitch);
 }
 
-void sound::init (std::string filepath,
-                  float volume) 
+void sound::init (const std::string& filepath, float volume) 
 {
-    if (!buffer.loadFromFile(filepath)) 
-    {
-        return;
-    }
-    soundObj.setBuffer(buffer);
-    soundObj.setVolume(volume);
-    return;
+        if (!buffer.loadFromFile(filepath)) return;
+        soundObj.setBuffer(buffer);
+        soundObj.setVolume(volume);
 }
 
 soundManager::soundManager () 
 {
-    audioInit();
+        audioInit();
 }
 
 soundManager::~soundManager () 
 {
-    terminateAudioThreads();
+        terminateAudioThreads();
 }
 
 void soundManager::audioInit () 
 {
-    audioCont.push_back(new sound("pong", "sfx/pong.wav", 75.0f));
-    audioCont.push_back(new sound("table", "sfx/pong-table.wav", 75.0f));
-    audioCont.push_back(new sound("outside", "sfx/pong-outside.wav", 75.0f));
-    audioCont.push_back(new sound("player1-scores", "sfx/player1-scores.wav", 75.0f));
-    audioCont.push_back(new sound("player2-scores", "sfx/player2-scores.wav", 75.0f));
-    audioCont.push_back(new sound("blip", "sfx/blip.wav", 75.0f));
-    audioCont.push_back(new sound("select", "sfx/select.wav", 75.0f));
-    audioCont.push_back(new sound("quit", "sfx/quit.wav", 75.0f));
-    audioCont.push_back(new sound("player-move", "sfx/player-move.wav", 75.0f));
-    return;
+        audioCont.emplace("pong", std::make_unique<sound>("pong", "sfx/pong.wav", 75.0f));
+        audioCont.emplace("table", std::make_unique<sound>("table", "sfx/pong-table.wav", 75.0f));
+        audioCont.emplace("outside", std::make_unique<sound>("outside", "sfx/pong-outside.wav", 75.0f));
+        audioCont.emplace("player1-scores", std::make_unique<sound>("player1-scores", "sfx/player1-scores.wav", 75.0f));
+        audioCont.emplace("player2-scores", std::make_unique<sound>("player2-scores", "sfx/player2-scores.wav", 75.0f));
+        audioCont.emplace("blip", std::make_unique<sound>("blip", "sfx/blip.wav", 75.0f));
+        audioCont.emplace("select", std::make_unique<sound>("select", "sfx/select.wav", 75.0f));
+        audioCont.emplace("quit", std::make_unique<sound>("quit", "sfx/quit.wav", 75.0f));
+        audioCont.emplace("player-move", std::make_unique<sound>("player-move", "sfx/player-move.wav", 75.0f));
 }
 
-void soundManager::playAudio (std::string name) 
+void soundManager::playAudio (const std::string& name) 
 {
-    for (unsigned int index = 0; index < audioCont.size(); index++) 
-    {
-        if (name == audioCont[index]->name) 
-        {
-            audioCont[index]->playSound();
-        }
-    }
-    return;
+        if (audioCont.find(name) != audioCont.end())
+                audioCont.at(name)->playSound();
 }
 
-void soundManager::setPitch (std::string name, float pitch) 
+void soundManager::setPitch (const std::string& name, float pitch) 
 {
-    for (unsigned int index = 0; index < audioCont.size(); index++) 
-    {
-        if (name == audioCont[index]->name) 
-        {
-            audioCont[index]->setPitch(pitch);
-        }
-    }
+        if (audioCont.find(name) != audioCont.end())
+                audioCont.at(name)->setPitch(pitch);
 }
 
 void soundManager::terminateAudioThreads () 
 {
-    while (!audioCont.empty()) 
-    {
-        delete audioCont.back();
-        audioCont.pop_back();
-    }
-    return;
+        audioCont.clear();
 }
