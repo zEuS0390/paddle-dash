@@ -1,9 +1,9 @@
 #include <SFML/Audio.hpp>
 #include <string>
 #include "sound.hpp"
+#include "constants.hpp"
 
-sound::sound (const std::string& name, const std::string& filepath, float volume)
-:       name(name) 
+sound::sound (const std::string& filepath, float volume)
 {
         init(filepath, volume);
 }
@@ -37,15 +37,15 @@ soundManager::~soundManager ()
 
 void soundManager::audioInit () 
 {
-        audioCont.emplace("pong", std::make_unique<sound>("pong", "sfx/pong.wav", 75.0f));
-        audioCont.emplace("table", std::make_unique<sound>("table", "sfx/pong-table.wav", 75.0f));
-        audioCont.emplace("outside", std::make_unique<sound>("outside", "sfx/pong-outside.wav", 75.0f));
-        audioCont.emplace("player1-scores", std::make_unique<sound>("player1-scores", "sfx/player1-scores.wav", 75.0f));
-        audioCont.emplace("player2-scores", std::make_unique<sound>("player2-scores", "sfx/player2-scores.wav", 75.0f));
-        audioCont.emplace("blip", std::make_unique<sound>("blip", "sfx/blip.wav", 75.0f));
-        audioCont.emplace("select", std::make_unique<sound>("select", "sfx/select.wav", 75.0f));
-        audioCont.emplace("quit", std::make_unique<sound>("quit", "sfx/quit.wav", 75.0f));
-        audioCont.emplace("player-move", std::make_unique<sound>("player-move", "sfx/player-move.wav", 75.0f));
+        audioCont.emplace("pong", std::make_unique<sound>(constants::SOUND_PONG, 75.0f));
+        audioCont.emplace("table", std::make_unique<sound>(constants::SOUND_TABLE, 75.0f));
+        audioCont.emplace("outside", std::make_unique<sound>(constants::SOUND_OUTSIDE, 75.0f));
+        audioCont.emplace("player1-scores", std::make_unique<sound>(constants::SOUND_PLAYER1_SCORES, 75.0f));
+        audioCont.emplace("player2-scores", std::make_unique<sound>(constants::SOUND_PLAYER2_SCORES, 75.0f));
+        audioCont.emplace("blip", std::make_unique<sound>(constants::SOUND_BLIP, 75.0f));
+        audioCont.emplace("select", std::make_unique<sound>(constants::SOUND_SELECT, 75.0f));
+        audioCont.emplace("quit", std::make_unique<sound>(constants::SOUND_QUIT, 75.0f));
+        audioCont.emplace("player-move", std::make_unique<sound>(constants::SOUND_PLAYER_MOVE, 75.0f));
 }
 
 void soundManager::playAudio (const std::string& name) 

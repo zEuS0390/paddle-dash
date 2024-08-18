@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "background.hpp"
+#include "constants.hpp"
 
 Background::Background (sf::RenderWindow& renderWin, sf::Vector2f initPos)
 :       pos(initPos), 
@@ -10,7 +11,7 @@ Background::Background (sf::RenderWindow& renderWin, sf::Vector2f initPos)
 
 void Background::init () 
 {
-        if (!image.loadFromFile("gfx/background.png")) return;
+        if (!image.loadFromFile(constants::IMAGE_GAMEPLAY_BACKGROUND)) return;
         texture.loadFromImage(image);
         sprite.setTexture(texture);
         sprite.setOrigin(texture.getSize().x/2.0f, texture.getSize().y/2.0f);

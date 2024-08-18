@@ -2,6 +2,7 @@
 #include <random>
 #include <ctime>
 #include <cmath>
+#include "constants.hpp"
 #include "pongball.hpp"
 #include "players.hpp"
 #include "sound.hpp"
@@ -35,8 +36,8 @@ Pongball::~Pongball ()
 // Initialization of pong ball
 void Pongball::init () 
 {
-    if (!texture.loadFromFile("gfx/pongball.png")) return;
-    if (!effectTex.loadFromFile("gfx/explode.png")) return;
+    if (!texture.loadFromFile(constants::IMAGE_PONG_BALL)) return;
+    if (!effectTex.loadFromFile(constants::IMAGE_EXPLODE)) return;
     effectSp.setTexture(effectTex);
     effectRect = sf::IntRect(0, 0, 32, 32);
     effectSp.setTextureRect(effectRect);
@@ -318,9 +319,7 @@ void Pongball::update ()
     collision();
     setSides();
     if (isMoving) 
-    {
         movement();
-    }
     if (isCounting) 
     {
         counterVar = counter.getElapsedTime().asSeconds();

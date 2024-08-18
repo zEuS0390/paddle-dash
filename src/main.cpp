@@ -13,9 +13,9 @@ using constants::WINDOW_TITLE;
 using constants::WINDOW_SIZEX;
 using constants::WINDOW_SIZEY;
 
-// Main executing function of the program
+// Main entry point of the program
 int main () 
 {
-    window win(WINDOW_SIZEX, WINDOW_SIZEY, WINDOW_TITLE);
-    return 0;
+        window win(WINDOW_SIZEX, WINDOW_SIZEY, WINDOW_TITLE);
+        return 0;
 }

@@ -21,7 +21,7 @@ public:
         float                   velY;
         float                   accY;
         float                   fric;
-        player                  (std::string, std::string, std::string, sf::Vector2f, soundManager&);
+        player                  (const std::string&, const std::string&, const std::string&, const sf::Vector2f&, soundManager&);
         void init               ();
         void movement           ();
         void collision          ();
@@ -49,10 +49,10 @@ public:
         players                 (sf::RenderWindow&, soundManager&);
         ~players                ();
         void init               ();
-        void setScore           (std::string, int);
+        void setScore           (const std::string&, int);
         void resetScore         ();
-        void move               (std::string, std::string);
-        void stop               (std::string);
+        void move               (const std::string&, const std::string&);
+        void stop               (const std::string&);
         void pause              ();
         void resume             ();
         void restart            ();

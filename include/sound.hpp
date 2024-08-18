@@ -10,8 +10,7 @@
 class sound 
 {
 public:
-        std::string name;
-        sound                                                           (const std::string&, const std::string&, float);
+        sound                                                           (const std::string&, float);
         void playSound                                                  ();
         void setPitch                                                   (float);
 private:
