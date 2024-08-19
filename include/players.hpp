@@ -53,8 +53,6 @@ public:
         void resetScore         ();
         void move               (const std::string&, const std::string&);
         void stop               (const std::string&);
-        void pause              ();
-        void resume             ();
         void restart            ();
         void events             ();
         void updates            ();

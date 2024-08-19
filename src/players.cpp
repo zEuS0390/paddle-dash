@@ -195,23 +195,6 @@ void players::stop (const std::string& id)
         }
 }
 
-void players::pause ()
-{
-        for (unsigned int i = 0; i < playersVec.size(); ++i)
-        {
-                playersVec.at(i).isMoving = false;
-                stop(playersVec.at(i).id);
-        }
-}
-
-void players::resume ()
-{
-        for (unsigned int i = 0; i < playersVec.size(); ++i)
-        {
-                playersVec.at(i).isMoving = true;
-        }
-}
-
 void players::restart ()
 {
         resetScore();

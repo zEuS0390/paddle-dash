@@ -6,7 +6,6 @@
 namespace funcs 
 {
     std::string intToStr (int);
-    float degToRad (float);
 }
 
 #endif
