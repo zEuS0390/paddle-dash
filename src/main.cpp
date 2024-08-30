@@ -12,10 +12,11 @@
 using constants::WINDOW_TITLE;
 using constants::WINDOW_SIZEX;
 using constants::WINDOW_SIZEY;
+using constants::GAME_VERSION;
 
 // Main entry point of the program
-int main () 
+int main()
 {
-        window win(WINDOW_SIZEX, WINDOW_SIZEY, WINDOW_TITLE);
+        window win(WINDOW_SIZEX, WINDOW_SIZEY, WINDOW_TITLE + " " + GAME_VERSION);
         return 0;
 }

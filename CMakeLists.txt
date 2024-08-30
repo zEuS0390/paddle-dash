@@ -2,9 +2,9 @@
 cmake_minimum_required(VERSION 3.21)
 
 # Project name and version
-project(pong_game_by_zEuS0390 VERSION 1.1.1)
+project(PaddleDash VERSION 1.1.1)
 
-option(PONG_GENERATE_INSTALLER "Generate an installer" FALSE)
+option(PADDLEDASH_GENERATE_INSTALLER "Generate an installer" FALSE)
 option(BUILD_SHARED_LIBS "Build Shared Libs" OFF)
 
 # Set C++ standard
@@ -16,10 +16,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 # Define source files
 set(APP_ICON_RC "${CMAKE_SOURCE_DIR}/rc/icon.rc")
 set(APP_SRC_FILES
-	src/AI.cpp src/background.cpp 
-	src/funcs.cpp src/main.cpp 
-	src/menu.cpp src/players.cpp 
-	src/pongball.cpp src/sound.cpp 
+	src/AI.cpp src/background.cpp
+	src/funcs.cpp src/main.cpp
+	src/menu.cpp src/players.cpp
+	src/pongball.cpp src/sound.cpp
 	src/window.cpp
 )
 
@@ -38,7 +38,7 @@ FetchContent_MakeAvailable(SFML)
 if (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	# Windows specific settings
 	add_executable(${PROJECT_NAME} WIN32 ${APP_SRC_FILES} $<$<PLATFORM_ID:Windows>:${APP_ICON_RC}>)
-	target_link_libraries(${PROJECT_NAME} sfml-audio sfml-graphics sfml-window sfml-system 
+	target_link_libraries(${PROJECT_NAME} sfml-audio sfml-graphics sfml-window sfml-system
 		-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic)
 else()
 	# Other platforms (assuming Unix-like)
@@ -46,18 +46,23 @@ else()
 	target_link_libraries(${PROJECT_NAME} sfml-audio sfml-graphics sfml-window sfml-system)
 endif()
 
+configure_file(
+        "${CMAKE_SOURCE_DIR}/include/version.hpp.in"
+        "${CMAKE_SOURCE_DIR}/include/version.hpp"
+)
+
 # Set include directories
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_include_directories(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")
 
 # Copy directories and files before build
 add_custom_command(
-	TARGET ${PROJECT_NAME} 
+	TARGET ${PROJECT_NAME}
 	PRE_BUILD
-	COMMAND ${CMAKE_COMMAND} 
+	COMMAND ${CMAKE_COMMAND}
 	-E copy_directory ${PROJECT_SOURCE_DIR}/gfx $<TARGET_FILE_DIR:${PROJECT_NAME}>/gfx)
 
 add_custom_command(
-	TARGET ${PROJECT_NAME} 
+	TARGET ${PROJECT_NAME}
 	PRE_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/sfx $<TARGET_FILE_DIR:${PROJECT_NAME}>/sfx)
 
@@ -70,13 +75,13 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
 		VERBATIM)
 endif()
 
-if (PONG_GENERATE_INSTALLER)
+if (PADDLEDASH_GENERATE_INSTALLER)
 	install(TARGETS ${PROJECT_NAME} DESTINATION ".")
 	install(DIRECTORY ${PROJECT_SOURCE_DIR}/gfx DESTINATION ".")
 	install(DIRECTORY ${PROJECT_SOURCE_DIR}/sfx DESTINATION ".")
-	install(FILES 
+	install(FILES
 		${PROJECT_SOURCE_DIR}/LICENSE
-		$<$<PLATFORM_ID:Windows>:${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll> 
+		$<$<PLATFORM_ID:Windows>:${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll>
 		DESTINATION ".")
 	set(CPACK_GENERATOR "NSIS")
 	set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
@@ -95,3 +100,4 @@ if (PONG_GENERATE_INSTALLER)
 	endif()
 	include(CPack)
 endif()
+

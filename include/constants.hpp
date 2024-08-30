@@ -2,10 +2,12 @@
 #define CONSTANTS_HPP
 
 #include <string>
+#include "version.hpp"
 
-namespace constants 
+namespace constants
 {
 	const std::string       WINDOW_TITLE =                  "Pong Game";
+        const std::string       GAME_VERSION =                  constants::PROJECT_VERSION;
 	constexpr unsigned int  WINDOW_SIZEX =                  640;
 	constexpr unsigned int  WINDOW_SIZEY =                  480;
         const std::string       SOUND_PONG =                    "sfx/pong.wav";
