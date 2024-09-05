@@ -1,4 +1,5 @@
 #include <SFML/Audio.hpp>
+#include <stdexcept>
 #include <string>
 #include "sound.hpp"
 #include "constants.hpp"
@@ -8,34 +9,35 @@ sound::sound (const std::string& filepath, float volume)
         init(filepath, volume);
 }
 
-void sound::playSound () 
+void sound::playSound ()
 {
         soundObj.play();
 }
 
-void sound::setPitch (float pitch) 
+void sound::setPitch (float pitch)
 {
         soundObj.setPitch(pitch);
 }
 
-void sound::init (const std::string& filepath, float volume) 
+void sound::init (const std::string& filepath, float volume)
 {
-        if (!buffer.loadFromFile(filepath)) return;
+        if (!buffer.loadFromFile(filepath))
+                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + filepath + "'") ;
         soundObj.setBuffer(buffer);
         soundObj.setVolume(volume);
 }
 
-soundManager::soundManager () 
+soundManager::soundManager ()
 {
         audioInit();
 }
 
-soundManager::~soundManager () 
+soundManager::~soundManager ()
 {
         terminateAudioThreads();
 }
 
-void soundManager::audioInit () 
+void soundManager::audioInit ()
 {
         audioCont.emplace("pong", std::make_unique<sound>(constants::SOUND_PONG, 75.0f));
         audioCont.emplace("table", std::make_unique<sound>(constants::SOUND_TABLE, 75.0f));
@@ -48,19 +50,19 @@ void soundManager::audioInit ()
         audioCont.emplace("player-move", std::make_unique<sound>(constants::SOUND_PLAYER_MOVE, 75.0f));
 }
 
-void soundManager::playAudio (const std::string& name) 
+void soundManager::playAudio (const std::string& name)
 {
         if (audioCont.find(name) != audioCont.end())
                 audioCont.at(name)->playSound();
 }
 
-void soundManager::setPitch (const std::string& name, float pitch) 
+void soundManager::setPitch (const std::string& name, float pitch)
 {
         if (audioCont.find(name) != audioCont.end())
                 audioCont.at(name)->setPitch(pitch);
 }
 
-void soundManager::terminateAudioThreads () 
+void soundManager::terminateAudioThreads ()
 {
         audioCont.clear();
 }

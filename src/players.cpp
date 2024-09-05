@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
+#include <stdexcept>
 #include <iostream>
 #include <cmath>
 #include "players.hpp"
 #include "sound.hpp"
+#include "constants.hpp"
 
 player::player (const std::string& id,
                 const std::string& filepath,
@@ -29,8 +31,10 @@ player::player (const std::string& id,
 
 void player::init ()
 {
-        if (!texture.loadFromFile(filepath)) return;
-        if (!shadowTex.loadFromFile(shadowfilepath)) return;
+        if (!texture.loadFromFile(filepath))
+                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + filepath + "'");
+        if (!shadowTex.loadFromFile(shadowfilepath))
+                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + shadowfilepath + "'");
         shadow.setTexture(shadowTex);
         shadow.setOrigin(shadowTex.getSize().x/2.0f, shadowTex.getSize().y/2.0f);
         sprite.setTexture(texture);

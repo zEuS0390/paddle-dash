@@ -26,6 +26,7 @@ namespace constants
         const std::string       IMAGE_PONG_BALL =               "gfx/pongball.png";
         const std::string       IMAGE_EXPLODE =                 "gfx/explode.png";
         const std::string       FONT_FAMILY =                   "gfx/font/november.ttf";
+        const std::string       FAILED_TO_LOAD_FILE_ERR =       "Failed to load file";
 }
 
 

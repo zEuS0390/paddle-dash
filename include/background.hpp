@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 // background class
-class Background 
+class Background
 {
 public:
         Background          (sf::RenderWindow&, sf::Vector2f);

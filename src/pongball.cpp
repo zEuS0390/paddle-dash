@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <stdexcept>
 #include <random>
 #include <ctime>
 #include <cmath>
@@ -33,10 +34,12 @@ Pongball::Pongball (sf::RenderWindow& renderWin,
 Pongball::~Pongball () {}
 
 // Initialization of pong ball
-void Pongball::init () 
+void Pongball::init ()
 {
-        if (!texture.loadFromFile(constants::IMAGE_PONG_BALL)) return;
-        if (!effectTex.loadFromFile(constants::IMAGE_EXPLODE)) return;
+        if (!texture.loadFromFile(constants::IMAGE_PONG_BALL))
+                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_PONG_BALL + "'");
+        if (!effectTex.loadFromFile(constants::IMAGE_EXPLODE))
+                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_EXPLODE + "'");
         effectSp.setTexture(effectTex);
         effectRect = sf::IntRect(0, 0, 32, 32);
         effectSp.setTextureRect(effectRect);
@@ -210,7 +213,7 @@ void Pongball::paddleCollide ()
         }
         else if (side.top > top && side.bottom < bottom)
         {
-            if (side.right > left && side.left < left && speed > 0) 
+            if (side.right > left && side.left < left && speed > 0)
             {
                 sprite.setPosition(currPos.x-sprite.getGlobalBounds().width/2.0f, currPos.y);
                 speed = -speed;
@@ -221,7 +224,7 @@ void Pongball::paddleCollide ()
             }
             else if (side.left < right &&
                        side.right > right &&
-                       speed < 0) 
+                       speed < 0)
             {
                 sprite.setPosition(currPos.x+sprite.getGlobalBounds().width/2.0f, currPos.y);
                 speed = -speed;
@@ -264,7 +267,7 @@ void Pongball::paddleCollide ()
                 sManager.playAudio("pong");
                 randomAngle(360.0f-ballAngle-20.0f, 360.0f-ballAngle);
             }
-            else if (side.left < right && side.right > right) 
+            else if (side.left < right && side.right > right)
             {
                 sprite.setPosition(currPos.x+sprite.getGlobalBounds().width/2.0f, currPos.y);
                 speed = -speed;

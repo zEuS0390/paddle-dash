@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <stdexcept>
 #include <vector>
 #include <string>
 #include <memory>
@@ -13,14 +14,15 @@ button::button (const std::string& str, const sf::Color& buttonColor, const sf::
         textColor(textColor),
         textCharSize(textCharSize),
         buttonSize(buttonSize),
-        position(position) 
+        position(position)
 {
         init();
 }
 
-void button::init () 
+void button::init ()
 {
-        if (!fontObj.loadFromFile(constants::FONT_FAMILY)) return;
+        if (!fontObj.loadFromFile(constants::FONT_FAMILY))
+                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::FONT_FAMILY + "'");
         buttonObj.setFillColor(buttonColor);
         buttonObj.setSize(buttonSize);
         buttonObj.setOrigin(buttonObj.getSize().x/2.0f, buttonObj.getSize().y/2.0f);
@@ -37,16 +39,19 @@ menu::menu (sf::RenderWindow& renderWin, soundManager& sManager)
 :       isPlaying(false),
         isMenu(true),
         renderWin(renderWin),
-        sManager(sManager) 
+        sManager(sManager)
 {
         init();
 }
 
-void menu::init () 
+void menu::init ()
 {
-        if (!gameLogo.loadFromFile(constants::IMAGE_GAME_LOGO)) return;
-        if (!mouseTexture.loadFromFile(constants::IMAGE_MOUSE_POINTER)) return;
-        if (!menuBackground.loadFromFile(constants::IMAGE_MENU_BACKGROUND)) return;
+        if (!gameLogo.loadFromFile(constants::IMAGE_GAME_LOGO))
+                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_GAME_LOGO + "'");
+        if (!mouseTexture.loadFromFile(constants::IMAGE_MOUSE_POINTER))
+                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_MOUSE_POINTER + "'");
+        if (!menuBackground.loadFromFile(constants::IMAGE_MENU_BACKGROUND))
+                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_MENU_BACKGROUND + "'");
         gameLogoTexture.loadFromImage(gameLogo);
         gameLogoSprite.setTexture(gameLogoTexture);
         mouseSprite.setTexture(mouseTexture);
@@ -68,7 +73,7 @@ void menu::mouseSelect (std::vector<std::unique_ptr<button>>& listObj, const sf:
                 if (mousePos.x > pButton->buttonObj.getGlobalBounds().left &&
                     mousePos.x < pButton->buttonObj.getGlobalBounds().left+pButton->buttonObj.getGlobalBounds().width &&
                     mousePos.y > pButton->buttonObj.getGlobalBounds().top &&
-                    mousePos.y < pButton->buttonObj.getGlobalBounds().top+pButton->buttonObj.getGlobalBounds().height) 
+                    mousePos.y < pButton->buttonObj.getGlobalBounds().top+pButton->buttonObj.getGlobalBounds().height)
                 {
                         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                         {
