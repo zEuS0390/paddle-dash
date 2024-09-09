@@ -3,9 +3,10 @@
 
 #include <string>
 
-namespace funcs 
+namespace funcs
 {
     std::string intToStr (int);
 }
 
 #endif
+

@@ -3,8 +3,9 @@
 
 #include <string>
 
-namespace constants {
-        const std::string PROJECT_VERSION = "@PROJECT_VERSION@";
+namespace constants
+{
+    const std::string PROJECT_VERSION = "@PROJECT_VERSION@";
 }
 
 #endif

@@ -13,21 +13,21 @@
 Pongball::Pongball (sf::RenderWindow& renderWin,
                     players& cplayers,
                     soundManager& sManager)
-:       effectActive(false),
-        isCounting(false),
-        isMoving(false),
-        constSpeed(500.0f),
-        maxSpeed(600.0f),
-        speed(constSpeed),
-        acc(1.0f),
-        counterVar(0.0f),
-        sManager(sManager),
-        eng(time(nullptr)),
-        renderWin(renderWin),
-        cplayers(cplayers),
-        side{0.0f, 0.0f, 0.0f, 0.0f}
+:   effectActive(false),
+    isCounting(false),
+    isMoving(false),
+    constSpeed(500.0f),
+    maxSpeed(600.0f),
+    speed(constSpeed),
+    acc(1.0f),
+    counterVar(0.0f),
+    sManager(sManager),
+    eng(time(nullptr)),
+    renderWin(renderWin),
+    cplayers(cplayers),
+    side{0.0f, 0.0f, 0.0f, 0.0f}
 {
-        init();
+    init();
 }
 
 // Main deconstructor of the pong ball class
@@ -36,49 +36,49 @@ Pongball::~Pongball () {}
 // Initialization of pong ball
 void Pongball::init ()
 {
-        if (!texture.loadFromFile(constants::IMAGE_PONG_BALL))
-                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_PONG_BALL + "'");
-        if (!effectTex.loadFromFile(constants::IMAGE_EXPLODE))
-                throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_EXPLODE + "'");
-        effectSp.setTexture(effectTex);
-        effectRect = sf::IntRect(0, 0, 32, 32);
-        effectSp.setTextureRect(effectRect);
-        effectSp.setOrigin(effectSp.getGlobalBounds().width/2.0f, effectSp.getGlobalBounds().height/2.0f);
-        effectSp.setPosition(effectPos);
-        sprite.setTexture(texture);
-        sprite.setOrigin(texture.getSize().x/2.0f, texture.getSize().y/2.0f);
-        currPos = sf::Vector2f(320.0f, 240.0f);
-        sprite.setPosition(currPos);
-        randomAngle(0, 45.0f);
-        randomPos();
-        vertex1.color = sf::Color(255, 255, 0, 200);
-        vertex2.color = sf::Color(255, 255, 0, 200);
-        isMoving = false;
+    if (!texture.loadFromFile(constants::IMAGE_PONG_BALL))
+        throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_PONG_BALL + "'");
+    if (!effectTex.loadFromFile(constants::IMAGE_EXPLODE))
+        throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_EXPLODE + "'");
+    effectSp.setTexture(effectTex);
+    effectRect = sf::IntRect(0, 0, 32, 32);
+    effectSp.setTextureRect(effectRect);
+    effectSp.setOrigin(effectSp.getGlobalBounds().width/2.0f, effectSp.getGlobalBounds().height/2.0f);
+    effectSp.setPosition(effectPos);
+    sprite.setTexture(texture);
+    sprite.setOrigin(texture.getSize().x/2.0f, texture.getSize().y/2.0f);
+    currPos = sf::Vector2f(320.0f, 240.0f);
+    sprite.setPosition(currPos);
+    randomAngle(0, 45.0f);
+    randomPos();
+    vertex1.color = sf::Color(255, 255, 0, 200);
+    vertex2.color = sf::Color(255, 255, 0, 200);
+    isMoving = false;
 }
 
 void Pongball::hitExplode ()
 {
-        if (effectActive)
+    if (effectActive)
+    {
+        if (effectClock.getElapsedTime().asSeconds() >= 0.09f)
         {
-                if (effectClock.getElapsedTime().asSeconds() >= 0.09f)
-                {
-                    if (effectRect.left == 160)
-                    {
-                        effectRect.left = 0;
-                        effectActive = false;
-                    }
-                    else
-                    {
-                        effectRect.left += 32;
-                    }
-                    effectSp.setTextureRect(effectRect);
-                    effectClock.restart();
-                }
+            if (effectRect.left == 160)
+            {
+                effectRect.left = 0;
+                effectActive = false;
+            }
+            else
+            {
+                effectRect.left += 32;
+            }
+            effectSp.setTextureRect(effectRect);
+            effectClock.restart();
         }
-        else
-        {
-                effectClock.restart();
-        }
+    }
+    else
+    {
+        effectClock.restart();
+    }
 }
 
 // Handles movemenr
@@ -341,15 +341,16 @@ void Pongball::update ()
 // Handles render
 void Pongball::render ()
 {
-        if (isMoving)
-                renderWin.draw(sprite);
-        renderWin.draw(effectSp);
+    if (isMoving)
+        renderWin.draw(sprite);
+    renderWin.draw(effectSp);
 }
 
 void Pongball::setSides ()
 {
-        side = {sprite.getGlobalBounds().top,
-                sprite.getGlobalBounds().top+texture.getSize().y,
-                sprite.getGlobalBounds().left,
-                sprite.getGlobalBounds().left+texture.getSize().x};
+    side = {sprite.getGlobalBounds().top,
+            sprite.getGlobalBounds().top+texture.getSize().y,
+            sprite.getGlobalBounds().left,
+            sprite.getGlobalBounds().left+texture.getSize().x};
 }
+

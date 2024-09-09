@@ -17,6 +17,7 @@ using constants::GAME_VERSION;
 // Main entry point of the program
 int main()
 {
-        window win(WINDOW_SIZEX, WINDOW_SIZEY, WINDOW_TITLE + " " + GAME_VERSION);
-        return 0;
+    window win(WINDOW_SIZEX, WINDOW_SIZEY, WINDOW_TITLE + " " + GAME_VERSION);
+    return 0;
 }
+

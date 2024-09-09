@@ -7,30 +7,31 @@
 #include <memory>
 
 // sound class
-class sound 
+class sound
 {
 public:
-        sound                                                           (const std::string&, float);
-        void playSound                                                  ();
-        void setPitch                                                   (float);
+    sound                                                       (const std::string&, float);
+    void playSound                                              ();
+    void setPitch                                               (float);
 private:
-        void init                                                       (const std::string&, float);
-        sf::SoundBuffer                                                 buffer;
-        sf::Sound                                                       soundObj;
+    void init                                                   (const std::string&, float);
+    sf::SoundBuffer                                             buffer;
+    sf::Sound                                                   soundObj;
 };
 
 // soundManager class
-class soundManager 
+class soundManager
 {
 public:
-        soundManager                                                    ();
-        ~soundManager                                                   ();
-        void audioInit                                                  ();
-        void playAudio                                                  (const std::string&);
-        void setPitch                                                   (const std::string&, float);
-        void terminateAudioThreads                                      ();
+    soundManager                                                ();
+    ~soundManager                                               ();
+    void audioInit                                              ();
+    void playAudio                                              (const std::string&);
+    void setPitch                                               (const std::string&, float);
+    void terminateAudioThreads                                  ();
 private:
-        std::unordered_map<std::string, std::unique_ptr<sound>>         audioCont;
+    std::unordered_map<std::string, std::unique_ptr<sound>>     audioCont;
 };
 
 #endif
+
