@@ -138,34 +138,39 @@ void Pongball::nextPos ()
 // Handles screen collision
 void Pongball::collision ()
 {
+    std::string soundName, setScoreTo;
+    float bouncePosY;
+
     if (currPos.x > 640.0f)
     {
-        isCounting = true;
-        speed = -constSpeed;
-        restart();
-        sManager.playAudio("player1-scores");
-        cplayers.setScore("player1", 1);
+        soundName = "player1-scores";
+        setScoreTo = "player1";
     }
     else if (currPos.x < 0.0f)
     {
-        isCounting = true;
-        speed = constSpeed;
-        restart();
-        sManager.playAudio("player2-scores");
-        cplayers.setScore("player2", 1);
+        soundName = "player2-scores";
+        setScoreTo = "player2";
     }
-    else if (currPos.y > 480.0f)
-    {
-        sManager.playAudio("table");
-        sprite.setPosition(currPos.x, currPos.y-texture.getSize().y/2.0f);
-        ballAngle = 360.0f - ballAngle;
-    }
+
+    if (currPos.y > 480.0f)
+        bouncePosY = currPos.y-texture.getSize().y/2.0f;
     else if (currPos.y < 0.0f)
+        bouncePosY = currPos.y+texture.getSize().y/2.0f;
+
+    if (currPos.x > 640.0f || currPos.x < 0.0f)
+    {
+        isCounting = true;
+        restart();
+        sManager.playAudio(soundName);
+        cplayers.setScore(setScoreTo, 1);
+    }
+    else if (currPos.y > 480.0f || currPos.y < 0.0f)
     {
         sManager.playAudio("table");
-        sprite.setPosition(currPos.x, currPos.y+texture.getSize().y/2.0f);
+        sprite.setPosition(currPos.x, bouncePosY);
         ballAngle = 360.0f - ballAngle;
     }
+
     paddleCollide();
 }
 
