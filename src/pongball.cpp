@@ -307,14 +307,7 @@ void Pongball::randomPos ()
 {
     float xpos;
     std::uniform_real_distribution<float> randPos(50.0f, 430.0f);
-    if (speed > 0)
-    {
-        xpos = 240.0f;
-    }
-    else
-    {
-        xpos = 400.0f;
-    }
+    xpos = (speed > 0)? 240.0f : 400.0f;
     currPos = sf::Vector2f(xpos, randPos(eng));
     sprite.setPosition(currPos);
 }
