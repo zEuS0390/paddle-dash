@@ -1,5 +1,8 @@
 *swp
 *~
+*.cbp
+*.dev
+*.layout
 /bin
 /obj
 /build
