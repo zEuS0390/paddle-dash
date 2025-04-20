@@ -5,6 +5,7 @@
 #include "players.hpp"
 #include "sound.hpp"
 #include "constants.hpp"
+#include "funcs.hpp"
 
 player::player (const std::string& id,
                 const std::string& filepath,
@@ -140,13 +141,13 @@ players::~players ()
 void players::init ()
 {
     playersVec.push_back(player("player1",
-                                "gfx/player1.png",
-                                "gfx/player-shadow.png",
+                                funcs::joinPath(funcs::getExecutableDir(), "gfx/player1.png"),
+                                funcs::joinPath(funcs::getExecutableDir(), "gfx/player-shadow.png"),
                                 sf::Vector2f(50.0f, 240.0f),
                                 sManager));
     playersVec.push_back(player("player2",
-                                "gfx/player2.png",
-                                "gfx/player-shadow.png",
+                                funcs::joinPath(funcs::getExecutableDir(), "gfx/player2.png"),
+                                funcs::joinPath(funcs::getExecutableDir(), "gfx/player-shadow.png"),
                                 sf::Vector2f(590.0f, 240.0f),
                                 sManager));
 }

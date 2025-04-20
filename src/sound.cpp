@@ -3,6 +3,7 @@
 #include <string>
 #include "sound.hpp"
 #include "constants.hpp"
+#include "funcs.hpp"
 
 sound::sound (const std::string& filepath, float volume)
 {
@@ -39,15 +40,15 @@ soundManager::~soundManager ()
 
 void soundManager::audioInit ()
 {
-    audioCont.emplace("pong", std::make_unique<sound>(constants::SOUND_PONG, 75.0f));
-    audioCont.emplace("table", std::make_unique<sound>(constants::SOUND_TABLE, 75.0f));
-    audioCont.emplace("outside", std::make_unique<sound>(constants::SOUND_OUTSIDE, 75.0f));
-    audioCont.emplace("player1-scores", std::make_unique<sound>(constants::SOUND_PLAYER1_SCORES, 75.0f));
-    audioCont.emplace("player2-scores", std::make_unique<sound>(constants::SOUND_PLAYER2_SCORES, 75.0f));
-    audioCont.emplace("blip", std::make_unique<sound>(constants::SOUND_BLIP, 75.0f));
-    audioCont.emplace("select", std::make_unique<sound>(constants::SOUND_SELECT, 75.0f));
-    audioCont.emplace("quit", std::make_unique<sound>(constants::SOUND_QUIT, 75.0f));
-    audioCont.emplace("player-move", std::make_unique<sound>(constants::SOUND_PLAYER_MOVE, 75.0f));
+    audioCont.emplace("pong", std::make_unique<sound>(funcs::joinPath(funcs::getExecutableDir(), constants::SOUND_PONG), 75.0f));
+    audioCont.emplace("table", std::make_unique<sound>(funcs::joinPath(funcs::getExecutableDir(), constants::SOUND_TABLE), 75.0f));
+    audioCont.emplace("outside", std::make_unique<sound>(funcs::joinPath(funcs::getExecutableDir(), constants::SOUND_OUTSIDE), 75.0f));
+    audioCont.emplace("player1-scores", std::make_unique<sound>(funcs::joinPath(funcs::getExecutableDir(), constants::SOUND_PLAYER1_SCORES), 75.0f));
+    audioCont.emplace("player2-scores", std::make_unique<sound>(funcs::joinPath(funcs::getExecutableDir(), constants::SOUND_PLAYER2_SCORES), 75.0f));
+    audioCont.emplace("blip", std::make_unique<sound>(funcs::joinPath(funcs::getExecutableDir(), constants::SOUND_BLIP), 75.0f));
+    audioCont.emplace("select", std::make_unique<sound>(funcs::joinPath(funcs::getExecutableDir(), constants::SOUND_SELECT), 75.0f));
+    audioCont.emplace("quit", std::make_unique<sound>(funcs::joinPath(funcs::getExecutableDir(), constants::SOUND_QUIT), 75.0f));
+    audioCont.emplace("player-move", std::make_unique<sound>(funcs::joinPath(funcs::getExecutableDir(), constants::SOUND_PLAYER_MOVE), 75.0f));
 }
 
 void soundManager::playAudio (const std::string& name)

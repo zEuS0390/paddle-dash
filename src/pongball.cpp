@@ -8,6 +8,7 @@
 #include "players.hpp"
 #include "sound.hpp"
 #include "rect.hpp"
+#include "funcs.hpp"
 
 // Main constructor of the pongball class
 Pongball::Pongball (sf::RenderWindow& renderWin,
@@ -36,9 +37,9 @@ Pongball::~Pongball () {}
 // Initialization of pong ball
 void Pongball::init ()
 {
-    if (!texture.loadFromFile(constants::IMAGE_PONG_BALL))
+    if (!texture.loadFromFile(funcs::joinPath(funcs::getExecutableDir(), constants::IMAGE_PONG_BALL)))
         throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_PONG_BALL + "'");
-    if (!effectTex.loadFromFile(constants::IMAGE_EXPLODE))
+    if (!effectTex.loadFromFile(funcs::joinPath(funcs::getExecutableDir(), constants::IMAGE_EXPLODE)))
         throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_EXPLODE + "'");
     effectSp.setTexture(effectTex);
     effectRect = sf::IntRect(0, 0, 32, 32);

@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include "background.hpp"
 #include "constants.hpp"
+#include "funcs.hpp"
 
 Background::Background (sf::RenderWindow& renderWin, sf::Vector2f initPos)
 :   pos(initPos),
@@ -12,7 +13,7 @@ Background::Background (sf::RenderWindow& renderWin, sf::Vector2f initPos)
 
 void Background::init ()
 {
-    if (!image.loadFromFile(constants::IMAGE_GAMEPLAY_BACKGROUND))
+    if (!image.loadFromFile(funcs::joinPath(funcs::getExecutableDir(), constants::IMAGE_GAMEPLAY_BACKGROUND)))
         throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_GAMEPLAY_BACKGROUND + "'") ;
     texture.loadFromImage(image);
     sprite.setTexture(texture);

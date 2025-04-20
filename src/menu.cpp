@@ -5,6 +5,7 @@
 #include <memory>
 #include "constants.hpp"
 #include "menu.hpp"
+#include "funcs.hpp"
 
 button::button (const std::string& str, const sf::Color& buttonColor, const sf::Color& textColor, float textCharSize, const sf::Vector2f& buttonSize, const sf::Vector2f& position)
 :   isHovered(false),
@@ -21,7 +22,7 @@ button::button (const std::string& str, const sf::Color& buttonColor, const sf::
 
 void button::init ()
 {
-    if (!fontObj.loadFromFile(constants::FONT_FAMILY))
+    if (!fontObj.loadFromFile(funcs::joinPath(funcs::getExecutableDir(), constants::FONT_FAMILY)))
         throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::FONT_FAMILY + "'");
     buttonObj.setFillColor(buttonColor);
     buttonObj.setSize(buttonSize);
@@ -46,11 +47,11 @@ menu::menu (sf::RenderWindow& renderWin, soundManager& sManager)
 
 void menu::init ()
 {
-    if (!gameLogo.loadFromFile(constants::IMAGE_GAME_LOGO))
+    if (!gameLogo.loadFromFile(funcs::joinPath(funcs::getExecutableDir(), constants::IMAGE_GAME_LOGO)))
         throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_GAME_LOGO + "'");
-    if (!mouseTexture.loadFromFile(constants::IMAGE_MOUSE_POINTER))
+    if (!mouseTexture.loadFromFile(funcs::joinPath(funcs::getExecutableDir(), constants::IMAGE_MOUSE_POINTER)))
         throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_MOUSE_POINTER + "'");
-    if (!menuBackground.loadFromFile(constants::IMAGE_MENU_BACKGROUND))
+    if (!menuBackground.loadFromFile(funcs::joinPath(funcs::getExecutableDir(), constants::IMAGE_MENU_BACKGROUND)))
         throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::IMAGE_MENU_BACKGROUND + "'");
     gameLogoTexture.loadFromImage(gameLogo);
     gameLogoSprite.setTexture(gameLogoTexture);

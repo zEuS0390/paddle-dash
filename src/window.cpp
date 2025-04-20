@@ -33,7 +33,7 @@ void window::init ()
 {
     renderWin.setFramerateLimit(120);
     renderWin.setMouseCursorVisible(false);
-    if (!font.loadFromFile(constants::FONT_FAMILY))
+    if (!font.loadFromFile(funcs::joinPath(funcs::getExecutableDir(), constants::FONT_FAMILY)))
         throw std::runtime_error(constants::FAILED_TO_LOAD_FILE_ERR + ": '" + constants::FONT_FAMILY + "'") ;
     textInit(scoresTxt, 60.0f, sf::Color::White, sf::Vector2f(160.0f, 50.0f));
     textInit(scoresTxt, 60.0f, sf::Color::White, sf::Vector2f(480.0f, 50.0f));
